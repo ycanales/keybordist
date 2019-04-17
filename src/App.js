@@ -26,7 +26,9 @@ const quote =
   // "There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable. There is another theory which states that this has already happened.";
   "There is a theory which states that if ever anyone discovers.";
 
-function App() {
+const App = () => {
+  const [records, setRecords] = useState([]);
+
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
   const [time, setTime] = useState(0);
@@ -61,11 +63,19 @@ function App() {
       setFinished(true);
       let wpmRaw = (quote.length * 60) / time / 5;
       let wpmString = wpmRaw.toString();
+      let wpmDisplay;
       if (wpmString.indexOf(".") !== -1) {
+        wpmDisplay = wpmRaw.toFixed(2);
         setWPM(wpmRaw.toFixed(2));
       } else {
+        wpmDisplay = wpmString;
         setWPM(wpmString);
       }
+      setRecords(
+        records.concat([
+          { time, wpmRaw, wpmString: wpmDisplay, words: quote.length / 5 }
+        ])
+      );
     } else if (quote.startsWith(text)) {
       // Text in progress, no typos
       setOkInput(text);
@@ -88,9 +98,7 @@ function App() {
         {started && finished && (
           <h2>
             Finished in {time} seconds. Your speed was {wpm} WPM.{" "}
-            <button onClick={reset}>
-              Restart.
-            </button>
+            <button onClick={reset}>Restart.</button>
           </h2>
         )}
         {started && !finished && <h2>{time} seconds elapsed.</h2>}
@@ -105,9 +113,19 @@ function App() {
           disabled={finished}
           style={errInput ? { color: "red" } : {}}
         />
+
+        {records.length > 0 && (
+          <ul>
+            {records.map(r => (
+              <li>
+                {r.wpmString} WPM - {r.words} words in {r.time} seconds.
+              </li>
+            ))}
+          </ul>
+        )}
       </header>
     </div>
   );
-}
+};
 
 export default App;
