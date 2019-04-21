@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import quotes from "./data/quotes";
 import "./App.css";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
@@ -22,11 +23,9 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-const quote =
-  // "There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable. There is another theory which states that this has already happened.";
-  "There is a theory which states that if ever anyone discovers.";
 
 const App = () => {
+  const [quote, setQuote] = useState(quotes[Math.floor(Math.random() * quotes.length)]);
   const [records, setRecords] = useState([]);
 
   const [started, setStarted] = useState(false);
@@ -52,6 +51,7 @@ const App = () => {
     setInput("");
     setOkInput("");
     setErrInput("");
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   };
 
   const onChange = event => {
@@ -59,9 +59,9 @@ const App = () => {
     setInput(text);
 
     // Text complete
-    if (text === quote) {
+    if (text === quote.text) {
       setFinished(true);
-      let wpmRaw = (quote.length * 60) / time / 5;
+      let wpmRaw = (quote.text.length * 60) / time / 5;
       let wpmString = wpmRaw.toString();
       let wpmDisplay;
       if (wpmString.indexOf(".") !== -1) {
@@ -73,10 +73,10 @@ const App = () => {
       }
       setRecords(
         records.concat([
-          { time, wpmRaw, wpmString: wpmDisplay, words: quote.length / 5 }
+          { time, wpmRaw, wpmString: wpmDisplay, words: quote.text.length / 5 }
         ])
       );
-    } else if (quote.startsWith(text)) {
+    } else if (quote.text.startsWith(text)) {
       // Text in progress, no typos
       setOkInput(text);
       setErrInput("");
@@ -103,7 +103,7 @@ const App = () => {
         )}
         {started && !finished && <h2>{time} seconds elapsed.</h2>}
         <div className="quote">
-          <p>{quote}</p>
+          <p>{quote.text}</p>
           <p className="progress">{okInput}</p>
         </div>
         <textarea
