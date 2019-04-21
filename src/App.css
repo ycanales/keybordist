@@ -112,10 +112,17 @@ button {
   font: inherit;
   /*border is optional*/
   border-bottom: 2px solid #fff;
-  cursor: pointer;
+  
 }
 
-button:hover {
+button:disabled {
+  color: grey;
+  border-bottom: 2px solid grey;
+  cursor: not-allowed;
+}
+
+button:hover:enabled {
+  cursor: pointer;
   color: red;
   border-bottom: 2px solid red;
 }
