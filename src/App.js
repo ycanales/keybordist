@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import MyQuotes from "./MyQuotes";
 import quotes from "./data/quotes";
 import "./App.css";
 
@@ -23,9 +24,11 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-
 const App = () => {
-  const [quote, setQuote] = useState(quotes[Math.floor(Math.random() * quotes.length)]);
+  const [quote, setQuote] = useState(
+    quotes[Math.floor(Math.random() * quotes.length)]
+  );
+  const [myQuotes, setMyQuotes] = useState([]);
   const [records, setRecords] = useState([]);
 
   const [started, setStarted] = useState(false);
@@ -93,7 +96,13 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <p style={{ fontSize: 200 }}>⌨</p>
+        <div className="App-header-menu">
+          <p style={{ fontSize: 200 }}>⌨</p>
+          <button>My Quotes</button>
+        </div>
+
+        <MyQuotes data={myQuotes} set={setMyQuotes} />
+
         {!started && <h2>Type to begin.</h2>}
         {started && finished && (
           <h2>
