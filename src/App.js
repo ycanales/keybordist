@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import MyQuotes from "./MyQuotes";
+import Typer from "./Typer";
 import quotes from "./data/quotes";
 import "./App.css";
 
@@ -94,46 +97,47 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="App-header-menu">
-          <p style={{ fontSize: 200 }}>⌨</p>
-          <button>My Quotes</button>
-        </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <div className="App-header-menu">
+            <p style={{ fontSize: 200 }}>⌨</p>
+            <Link to="/">Home</Link>
+            <Link to="/my-quotes">My Quotes</Link>
+          </div>
 
-        <MyQuotes data={myQuotes} set={setMyQuotes} />
-
-        {!started && <h2>Type to begin.</h2>}
-        {started && finished && (
-          <h2>
-            Finished in {time} seconds. Your speed was {wpm} WPM.{" "}
-            <button onClick={reset}>Restart.</button>
-          </h2>
-        )}
-        {started && !finished && <h2>{time} seconds elapsed.</h2>}
-        <div className="quote">
-          <p>{quote.text}</p>
-          <p className="progress">{okInput}</p>
-        </div>
-        <textarea
-          value={input}
-          onChange={onChange}
-          rows="10"
-          disabled={finished}
-          style={errInput ? { color: "red" } : {}}
-        />
-
-        {records.length > 0 && (
-          <ul>
-            {records.map(r => (
-              <li>
-                {r.wpmString} WPM - {r.words} words in {r.time} seconds.
-              </li>
-            ))}
-          </ul>
-        )}
-      </header>
-    </div>
+          <Route
+            path="/my-quotes"
+            render={props => (
+              <MyQuotes {...props} data={myQuotes} set={setMyQuotes} />
+            )}
+          />
+          <Route
+            path="/"
+            exact
+            render={props => (
+              <Typer
+                {...props}
+                started={started}
+                finished={finished}
+                time={time}
+                wpm={wpm}
+                reset={reset}
+                quote={quote}
+                okInput={okInput}
+                onChange={onChange}
+                input={input}
+                errInput={errInput}
+                records={records}
+              />
+            )}
+          />
+        </header>
+        <footer>
+          created by&nbsp;<a href="http://ycanales.com">ycanales</a>
+        </footer>
+      </div>
+    </Router>
   );
 };
 

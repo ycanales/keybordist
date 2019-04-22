@@ -41,14 +41,36 @@
     sans-serif;
 }
 
+body {
+  background-color: #2e3440;
+  font-size: 21px;
+  color: #e5e9f0;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  padding: 37px;
+}
+
+a:visited {
+  color: #81a1c1;
+}
+
+a:hover {
+  color: #8fbcbb;
+}
+
+a {
+  color: #5e81ac;
+}
+
 .App-header {
   padding: 100px;
-  background-color: #282c34;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-header-menu {
@@ -57,20 +79,17 @@
   align-items: baseline;
 }
 
+.App-header-menu a {
+  margin-left: 21px;
+  font-size: 28px;
+}
+
 .App-link {
   color: #61dafb;
 }
 
 p {
   margin: 0;
-}
-
-.quote {
-  position: relative;
-}
-
-.quote p {
-  padding: 4px;
 }
 
 .progress,
@@ -84,16 +103,16 @@ p {
 }
 
 .error {
-  color: red;
+  color: #bf616a;
 }
 
 textarea,
 input {
   font-size: calc(10px + 2vmin);
   width: 100%;
-  background-color: #373c47;
+  background-color: #3b4252;
   margin-top: 64px;
-  color: #61dafb;
+  color: #eceff4;
   resize: none;
   border: none;
   overflow: auto;
@@ -106,23 +125,22 @@ input {
 
 button {
   background: none !important;
-  color: inherit;
+  color: #ebcb8b;
   border: none;
   padding: 0 !important;
   font: inherit;
   /*border is optional*/
-  border-bottom: 2px solid #fff;
-  
+  border-bottom: 2px solid #ebcb8b;
 }
 
 button:disabled {
-  color: grey;
-  border-bottom: 2px solid grey;
+  color: #4c566a;
+  border-bottom: 2px solid #4c566a;
   cursor: not-allowed;
 }
 
 button:hover:enabled {
   cursor: pointer;
-  color: red;
-  border-bottom: 2px solid red;
+  color: #a3be8c;
+  border-bottom: 2px solid #a3be8c;
 }
