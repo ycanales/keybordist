@@ -1,65 +1,58 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-
-const StyledMyQuotes = styled.div`
-  form {
-    width: 50%;
-  }
-  .message {
-    font-weight: 700;
-    font-size: 50px;
-    color: #eceff4;
-    margin-bottom: 1em;
-  }
-  input,
-  textarea {
-    color: #eceff4;
-    margin-top: 0.5em;
-  }
-  label {
-    display: block;
-    margin-top: 1.5em;
-    color: #d8dee9;
-  }
-  button {
-    margin-top: 42px;
-    font-size: 28px;
-  }
-`;
+import StyledForm from "./StyledForm";
 
 const MyQuotes = ({ data, set }) => {
   const [newQuote, setNewQuote] = useState("");
   const [newTitle, setNewTitle] = useState("");
-  const saveNewQuote = () => {
-    if (newQuote.length && newTitle.length) {
+  const saveNewQuote = e => {
+    e.preventDefault();
+    if (data && newQuote.length && newTitle.length) {
+      setNewQuote("");
+      setNewTitle("");
       set(data.concat([{ title: newTitle, text: newQuote }]));
     }
   };
   return (
-    <StyledMyQuotes>
-      {(!data || !data.length) && (
-        <h2 className="message">
-          You have no quotes, why don't you paste one?
-        </h2>
+    <StyledForm>
+      {!data || !data.length ? (
+        <h2 className="message">You have no quotes.</h2>
+      ) : data.length === 1 ? (
+        <h2 className="message">You have one quote.</h2>
+      ) : (
+        <h2 className="message">You have {data.length} quotes.</h2>
       )}
-      {data && data.length && data.map(quote => <p>{quote.title}</p>)}
 
-      <form onSubmit={saveNewQuote}>
-        <label>Title</label>
-        <input value={newTitle} onChange={e => setNewTitle(e.target.value)} />
-        <label>Text</label>
-        <textarea
-          value={newQuote}
-          onChange={e => setNewQuote(e.target.value)}
-        />
-        <button
-          onClick={saveNewQuote}
-          disabled={!newQuote.length || !newTitle.length}
-        >
-          Save
-        </button>
-      </form>
-    </StyledMyQuotes>
+      <div className="row">
+        <form onSubmit={saveNewQuote}>
+          <h3>New Quote</h3>
+          <label>Title</label>
+          <input value={newTitle} onChange={e => setNewTitle(e.target.value)} />
+          <label>Text</label>
+          <textarea
+            value={newQuote}
+            onChange={e => setNewQuote(e.target.value)}
+            rows={5}
+          />
+          <button
+            onClick={saveNewQuote}
+            disabled={!newQuote.length || !newTitle.length}
+          >
+            Save
+          </button>
+        </form>
+
+        <div>
+          {data && data.length ? (
+            <React.Fragment>
+              <h3>Your Quotes</h3>
+              {data.map(quote => (
+                <p key={quote.title}>{quote.title}</p>
+              ))}
+            </React.Fragment>
+          ) : null}
+        </div>
+      </div>
+    </StyledForm>
   );
 };
 

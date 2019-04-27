@@ -5,6 +5,7 @@ import MyQuotes from "./MyQuotes";
 import Typer from "./Typer";
 import quotes from "./data/quotes";
 import "./App.css";
+import MySetups from "./MySetups";
 
 // https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback, delay) {
@@ -104,6 +105,7 @@ const App = () => {
             <p style={{ fontSize: 200 }}>⌨</p>
             <Link to="/">Home</Link>
             <Link to="/my-quotes">My Quotes</Link>
+            <Link to="/my-setups">My Setups</Link>
           </div>
 
           <Route
@@ -112,6 +114,7 @@ const App = () => {
               <MyQuotes {...props} data={myQuotes} set={setMyQuotes} />
             )}
           />
+          <Route path="/my-setups" render={props => <MySetups {...props} />} />
           <Route
             path="/"
             exact

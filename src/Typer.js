@@ -39,7 +39,11 @@ const Typer = ({
 }) => {
   return (
     <StyledTyper>
-      {!started && <h2>Type to begin.</h2>}
+      {!started && (
+        <h2>
+          Type to begin. <button onClick={reset}>Another quote?</button>
+        </h2>
+      )}
       {started && finished && (
         <h2>
           Finished in {time} seconds. Your speed was {wpm} WPM.{" "}
