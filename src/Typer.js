@@ -7,6 +7,7 @@ const StyledTyper = styled.div`
     padding-left: 21px;
     font-weight: 700;
     font-size: 50px;
+    margin-bottom: 1em;
   }
   .quote {
     border: 4px dashed #3b4252;
@@ -35,7 +36,7 @@ const Typer = ({
   onChange,
   input,
   errInput,
-  records
+  scores
 }) => {
   return (
     <StyledTyper>
@@ -63,9 +64,9 @@ const Typer = ({
         style={errInput ? { color: "#B48EAD" } : {}}
       />
 
-      {records.length > 0 && (
+      {scores.length > 0 && (
         <ul>
-          {records.map(r => (
+          {scores.map(r => (
             <li>
               {r.wpmString} WPM - {r.words} words in {r.time} seconds.
             </li>

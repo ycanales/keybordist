@@ -3,10 +3,24 @@ import styled from "styled-components";
 const StyledForm = styled.div`
   .row {
     display: flex;
-    flex-direc
+  }
+  .container {
+    flex: 1 0 50%;
+    justify-content: space-between;
+  }
+  .list-right {
+    flex: 1 0 50%;
+    margin-left: 2em;
+    h3 {
+      margin-bottom: 1.5em;
+    }
+  }
+  .quote-row {
+    width: 100%;
+    justify-content: space-between;
   }
   form {
-    width: 50%;
+    flex: 1 0 50%;
   }
   .message {
     font-weight: 700;
@@ -19,12 +33,15 @@ const StyledForm = styled.div`
     color: #eceff4;
     margin-top: 0.5em;
   }
+  textarea {
+    font-size: 16px;
+  }
   label {
     display: block;
     margin-top: 1.5em;
     color: #d8dee9;
   }
-  button {
+  .save {
     margin-top: 42px;
     font-size: 28px;
   }

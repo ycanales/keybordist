@@ -7,11 +7,17 @@ const MyQuotes = ({ data, set }) => {
   const saveNewQuote = e => {
     e.preventDefault();
     if (data && newQuote.length && newTitle.length) {
+      set(data.concat([{ title: newTitle, text: newQuote }]));
       setNewQuote("");
       setNewTitle("");
-      set(data.concat([{ title: newTitle, text: newQuote }]));
     }
   };
+  const deleteQuote = title => {
+    set(data.filter(quote => quote.title !== title));
+    setNewQuote("");
+    setNewTitle("");
+  };
+
   return (
     <StyledForm>
       {!data || !data.length ? (
@@ -22,7 +28,7 @@ const MyQuotes = ({ data, set }) => {
         <h2 className="message">You have {data.length} quotes.</h2>
       )}
 
-      <div className="row">
+      <div className="row container">
         <form onSubmit={saveNewQuote}>
           <h3>New Quote</h3>
           <label>Title</label>
@@ -34,6 +40,7 @@ const MyQuotes = ({ data, set }) => {
             rows={5}
           />
           <button
+            class="save"
             onClick={saveNewQuote}
             disabled={!newQuote.length || !newTitle.length}
           >
@@ -41,12 +48,17 @@ const MyQuotes = ({ data, set }) => {
           </button>
         </form>
 
-        <div>
+        <div class="list-right">
           {data && data.length ? (
             <React.Fragment>
               <h3>Your Quotes</h3>
               {data.map(quote => (
-                <p key={quote.title}>{quote.title}</p>
+                <div className="row quote-row" key={quote.title}>
+                  <p>{quote.title}</p>
+                  <button onClick={e => deleteQuote(quote.title)}>
+                    Delete
+                  </button>
+                </div>
               ))}
             </React.Fragment>
           ) : null}

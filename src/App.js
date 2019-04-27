@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import createPersistedState from "use-persisted-state";
 
 import MyQuotes from "./MyQuotes";
 import Typer from "./Typer";
@@ -32,8 +33,9 @@ const App = () => {
   const [quote, setQuote] = useState(
     quotes[Math.floor(Math.random() * quotes.length)]
   );
-  const [myQuotes, setMyQuotes] = useState([]);
-  const [records, setRecords] = useState([]);
+  const useMyQuotesState = createPersistedState("myQuotes");
+  const [myQuotes, setMyQuotes] = useMyQuotesState([]);
+  const [scores, setScores] = useState([]);
 
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -78,8 +80,8 @@ const App = () => {
         wpmDisplay = wpmString;
         setWPM(wpmString);
       }
-      setRecords(
-        records.concat([
+      setScores(
+        scores.concat([
           { time, wpmRaw, wpmString: wpmDisplay, words: quote.text.length / 5 }
         ])
       );
@@ -131,7 +133,7 @@ const App = () => {
                 onChange={onChange}
                 input={input}
                 errInput={errInput}
-                records={records}
+                scores={scores}
               />
             )}
           />
