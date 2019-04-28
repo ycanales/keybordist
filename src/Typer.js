@@ -17,6 +17,7 @@ const StyledTyper = styled.div`
     p {
       margin: 0;
       padding: 21px;
+      white-space: pre-line;
     }
   }
   textarea {
