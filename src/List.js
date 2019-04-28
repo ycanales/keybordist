@@ -24,10 +24,18 @@ export const StyledListItem = styled.div`
   }
   button {
     text-decoration: none;
+
+    &:hover:enabled {
+      cursor: pointer;
+    }
+  }
+  .select {
+    margin-right: 12px;
+  }
+  .delete {
     color: ${nord[12]};
     border-bottom: 2px solid ${nord[12]};
     &:hover:enabled {
-      cursor: pointer;
       color: ${nord[11]};
       border-bottom: 2px solid ${nord[11]};
     }

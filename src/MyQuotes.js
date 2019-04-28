@@ -66,10 +66,7 @@ const MyQuotes = ({ data, set }) => {
                 <StyledQuote>
                   <div className="quote-row" key={quote.title}>
                     <p>{quote.title}</p>
-                    <button
-                      className="quote-delete"
-                      onClick={e => deleteQuote(quote.title)}
-                    >
+                    <button onClick={e => deleteQuote(quote.title)}>
                       Delete
                     </button>
                   </div>

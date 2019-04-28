@@ -33,6 +33,9 @@ const App = () => {
   const [quote, setQuote] = useState(
     quotes[Math.floor(Math.random() * quotes.length)]
   );
+  const useCurrentSetupState = createPersistedState("currentSetup");
+  const [currentSetup, setCurrentSetup] = useCurrentSetupState("");
+
   const useMyQuotesState = createPersistedState("myQuotes");
   const [myQuotes, setMyQuotes] = useMyQuotesState([]);
   const useMySetupsState = createPersistedState("mySetups");
@@ -121,7 +124,13 @@ const App = () => {
           <Route
             path="/my-setups"
             render={props => (
-              <MySetups {...props} data={mySetups} set={setMySetups} />
+              <MySetups
+                {...props}
+                data={mySetups}
+                current={currentSetup}
+                set={setMySetups}
+                setCurrent={setCurrentSetup}
+              />
             )}
           />
           <Route
@@ -141,6 +150,8 @@ const App = () => {
                 input={input}
                 errInput={errInput}
                 scores={scores}
+                setupsCount={mySetups.length}
+                currentSetup={currentSetup}
               />
             )}
           />

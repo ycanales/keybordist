@@ -1,8 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+import { getDisplayText } from "./MySetups";
 import { inputs } from "./styles";
+import nord from "./nord";
 
 const StyledTyper = styled.div`
+  .setup {
+    text-transform: uppercase;
+    font-size: calc(1rem);
+    padding-left: 21px;
+    color: ${nord[4]};
+  }
   h2 {
     padding-left: 21px;
     font-weight: 700;
@@ -37,10 +47,23 @@ const Typer = ({
   onChange,
   input,
   errInput,
-  scores
+  scores,
+  setupsCount,
+  currentSetup
 }) => {
   return (
     <StyledTyper>
+      {!started && (
+        <p className="setup">
+          {currentSetup
+            ? "Typing with " + getDisplayText(currentSetup)
+            : "No current setup. "}
+          <Link to="/my-setups">
+            {currentSetup ? "" : setupsCount ? " Select one" : "Add one"}
+          </Link>
+          .
+        </p>
+      )}
       {!started && (
         <h2>
           Type to begin. <button onClick={reset}>Another quote?</button>

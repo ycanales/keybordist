@@ -3,7 +3,17 @@ import StyledForm from "./StyledForm";
 import { StyledListItem } from "./List";
 import uuid from "uuid/v1";
 
-const MySetups = ({ data, set }) => {
+export function getDisplayText(setup) {
+  let text = "";
+  if (setup.keyboard) text += ` ${setup.keyboard}`;
+  if (setup.layout) text += ` ${setup.layout}`;
+  if (setup.keycaps) text += ` ${setup.keycaps}`;
+  if (setup.switches) text += ` ${setup.switches}`;
+  if (setup.other) text += ` ${setup.other}`;
+  return text.trim();
+}
+
+const MySetups = ({ data, set, setCurrent, current }) => {
   const [keyboard, setKeyboard] = useState("");
   const [layout, setLayout] = useState("");
   const [keycaps, setKeycaps] = useState("");
@@ -22,6 +32,7 @@ const MySetups = ({ data, set }) => {
           { uuid: uuid(), keyboard, layout, keycaps, switches, other }
         ])
       );
+      reset();
     }
   };
 
@@ -94,12 +105,22 @@ const MySetups = ({ data, set }) => {
                       {setup.other && <li>Other: {setup.other}</li>}
                     </ul>
 
-                    <button
-                      className="quote-delete"
-                      onClick={e => deleteSetup(setup.uuid)}
-                    >
-                      Delete
-                    </button>
+                    <div className="row">
+                      {setup.uuid !== current.uuid && (
+                        <button
+                          className="select"
+                          onClick={e => setCurrent(setup)}
+                        >
+                          Select
+                        </button>
+                      )}
+                      <button
+                        className="delete"
+                        onClick={e => deleteSetup(setup.uuid)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </StyledListItem>
               ))}
