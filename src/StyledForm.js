@@ -4,20 +4,21 @@ const StyledForm = styled.div`
   .row {
     display: flex;
   }
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
   .container {
     flex: 1 0 50%;
     justify-content: space-between;
   }
   .list-right {
     flex: 1 0 50%;
-    margin-left: 2em;
+    margin-left: 2rem;
+    min-width: 0;
     h3 {
-      margin-bottom: 1.5em;
+      margin-bottom: 1.5rem;
     }
-  }
-  .quote-row {
-    width: 100%;
-    justify-content: space-between;
   }
   form {
     flex: 1 0 50%;

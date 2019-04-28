@@ -1,5 +1,28 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import StyledForm from "./StyledForm";
+
+const StyledQuote = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  .quote-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 1rem;
+  }
+  .quote-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 1rem;
+  }
+  button {
+    text-decoration: none;
+    color: ;
+  }
+`;
 
 const MyQuotes = ({ data, set }) => {
   const [newQuote, setNewQuote] = useState("");
@@ -53,12 +76,18 @@ const MyQuotes = ({ data, set }) => {
             <React.Fragment>
               <h3>Your Quotes</h3>
               {data.map(quote => (
-                <div className="row quote-row" key={quote.title}>
-                  <p>{quote.title}</p>
-                  <button onClick={e => deleteQuote(quote.title)}>
-                    Delete
-                  </button>
-                </div>
+                <StyledQuote>
+                  <div className="quote-row" key={quote.title}>
+                    <p>{quote.title}</p>
+                    <button
+                      className="quote-delete"
+                      onClick={e => deleteQuote(quote.title)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                  <p className="quote-text">{quote.text}</p>
+                </StyledQuote>
               ))}
             </React.Fragment>
           ) : null}
