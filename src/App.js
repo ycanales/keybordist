@@ -35,6 +35,8 @@ const App = () => {
   );
   const useMyQuotesState = createPersistedState("myQuotes");
   const [myQuotes, setMyQuotes] = useMyQuotesState([]);
+  const useMySetupsState = createPersistedState("mySetups");
+  const [mySetups, setMySetups] = useMySetupsState([]);
   const [scores, setScores] = useState([]);
 
   const [started, setStarted] = useState(false);
@@ -116,7 +118,12 @@ const App = () => {
               <MyQuotes {...props} data={myQuotes} set={setMyQuotes} />
             )}
           />
-          <Route path="/my-setups" render={props => <MySetups {...props} />} />
+          <Route
+            path="/my-setups"
+            render={props => (
+              <MySetups {...props} data={mySetups} set={setMySetups} />
+            )}
+          />
           <Route
             path="/"
             exact

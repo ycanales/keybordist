@@ -1,32 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import StyledForm from "./StyledForm";
+import { StyledListItem } from "./List";
 
-const StyledQuote = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1.5rem;
-  .quote-row {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    font-size: 1rem;
-  }
+const StyledQuote = styled(StyledListItem)`
   .quote-text {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    font-size: 1rem;
-  }
-  button {
-    text-decoration: none;
-    color: ;
   }
 `;
 
 const MyQuotes = ({ data, set }) => {
   const [newQuote, setNewQuote] = useState("");
   const [newTitle, setNewTitle] = useState("");
+
   const saveNewQuote = e => {
     e.preventDefault();
     if (data && newQuote.length && newTitle.length) {
@@ -35,10 +23,9 @@ const MyQuotes = ({ data, set }) => {
       setNewTitle("");
     }
   };
+
   const deleteQuote = title => {
     set(data.filter(quote => quote.title !== title));
-    setNewQuote("");
-    setNewTitle("");
   };
 
   return (
@@ -63,7 +50,7 @@ const MyQuotes = ({ data, set }) => {
             rows={5}
           />
           <button
-            class="save"
+            className="save"
             onClick={saveNewQuote}
             disabled={!newQuote.length || !newTitle.length}
           >
@@ -71,7 +58,7 @@ const MyQuotes = ({ data, set }) => {
           </button>
         </form>
 
-        <div class="list-right">
+        <div className="list-right">
           {data && data.length ? (
             <React.Fragment>
               <h3>Your Quotes</h3>
@@ -86,7 +73,7 @@ const MyQuotes = ({ data, set }) => {
                       Delete
                     </button>
                   </div>
-                  <p className="quote-text">{quote.text}</p>
+                  <p className="text quote-text">{quote.text}</p>
                 </StyledQuote>
               ))}
             </React.Fragment>
