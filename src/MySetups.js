@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StyledForm from "./StyledForm";
 import { StyledListItem } from "./List";
 import uuid from "uuid/v1";
+import nord from "./nord";
 
 export function getDisplayText(setup) {
   let text = "";
@@ -60,7 +61,8 @@ const MySetups = ({ data, set, setCurrent, current }) => {
 
       <div className="row container">
         <form onSubmit={saveSetup}>
-          <p>
+          <h3>New Setup</h3>
+          <p style={{ marginTop: 20 }}>
             Create a setup to track your typing speeds across different
             keyboards, layouts, keycap profiles, or switch types. You have to
             fill at least one field.
@@ -95,7 +97,7 @@ const MySetups = ({ data, set, setCurrent, current }) => {
             <React.Fragment>
               <h3>Your Setups</h3>
               {data.map(setup => (
-                <StyledListItem>
+                <StyledListItem active={setup.uuid === current.uuid}>
                   <div className="row setup-row">
                     <ul>
                       {setup.keyboard && <li>Keyboard: {setup.keyboard}</li>}
@@ -105,7 +107,7 @@ const MySetups = ({ data, set, setCurrent, current }) => {
                       {setup.other && <li>Other: {setup.other}</li>}
                     </ul>
 
-                    <div className="row">
+                    <div className="row setup-row-actions">
                       {setup.uuid !== current.uuid && (
                         <button
                           className="select"
