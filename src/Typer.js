@@ -13,6 +13,9 @@ const StyledTyper = styled.div`
     padding-left: 21px;
     color: ${nord[4]};
   }
+  .setup-highlight {
+    color: ${nord[15]};
+  }
   h2 {
     padding-left: 21px;
     font-weight: 700;
@@ -55,9 +58,16 @@ const Typer = ({
     <StyledTyper>
       {!started && (
         <p className="setup">
-          {currentSetup
-            ? "Typing with " + getDisplayText(currentSetup)
-            : "No current setup. "}
+          {currentSetup ? (
+            <>
+              <span>Typing with&nbsp;</span>
+              <span className="setup-highlight">
+                {getDisplayText(currentSetup)}
+              </span>
+            </>
+          ) : (
+            "No current setup. "
+          )}
           <Link to="/my-setups">
             {currentSetup ? "" : setupsCount ? " Select one" : "Add one"}
           </Link>

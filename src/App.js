@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  NavLink
+} from "react-router-dom";
 import createPersistedState from "use-persisted-state";
 
 import MyQuotes from "./MyQuotes";
@@ -110,9 +115,15 @@ const App = () => {
         <header className="App-header">
           <div className="App-header-menu">
             <p style={{ fontSize: 200 }}>⌨</p>
-            <Link to="/">Home</Link>
-            <Link to="/my-quotes">My Quotes</Link>
-            <Link to="/my-setups">My Setups</Link>
+            <NavLink exact activeClassName="active" to="/">
+              Home
+            </NavLink>
+            <NavLink activeClassName="active" to="/my-quotes">
+              My Quotes
+            </NavLink>
+            <NavLink activeClassName="active" to="/my-setups">
+              My Setups
+            </NavLink>
           </div>
 
           <Route
