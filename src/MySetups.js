@@ -38,6 +38,9 @@ const MySetups = ({ data, set, setCurrent, current }) => {
   };
 
   const deleteSetup = uuid => {
+    if (current.uuid === uuid) {
+      setCurrent(null);
+    }
     set(data.filter(setup => setup.uuid !== uuid));
   };
 
@@ -97,7 +100,12 @@ const MySetups = ({ data, set, setCurrent, current }) => {
             <React.Fragment>
               <h3>Your Setups</h3>
               {data.map(setup => (
-                <StyledListItem active={setup.uuid === current.uuid}>
+                <StyledListItem
+                  key={setup.uuid}
+                  active={
+                    current && current.uuid && setup.uuid === current.uuid
+                  }
+                >
                   <div className="row setup-row">
                     <ul>
                       {setup.keyboard && <li>Keyboard: {setup.keyboard}</li>}
@@ -108,14 +116,14 @@ const MySetups = ({ data, set, setCurrent, current }) => {
                     </ul>
 
                     <div className="row setup-row-actions">
-                      {setup.uuid !== current.uuid && (
+                      {!current || setup.uuid !== current.uuid ? (
                         <button
                           className="select"
                           onClick={e => setCurrent(setup)}
                         >
                           Select
                         </button>
-                      )}
+                      ) : null}
                       <button
                         className="delete"
                         onClick={e => deleteSetup(setup.uuid)}
