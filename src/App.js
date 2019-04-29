@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import createPersistedState from "use-persisted-state";
 
 import MyQuotes from "./MyQuotes";

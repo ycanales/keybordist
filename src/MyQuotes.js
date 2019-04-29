@@ -64,8 +64,8 @@ const MyQuotes = ({ data, set }) => {
             <React.Fragment>
               <h3>Your Quotes</h3>
               {data.map(quote => (
-                <StyledQuote>
-                  <div className="quote-row" key={quote.title}>
+                <StyledQuote key={quote.uuid}>
+                  <div className="quote-row">
                     <p>{quote.title}</p>
                     <button onClick={e => deleteQuote(quote.uuid)}>
                       Delete

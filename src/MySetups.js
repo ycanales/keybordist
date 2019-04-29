@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import StyledForm from "./StyledForm";
 import { StyledListItem } from "./List";
 import uuid from "uuid/v1";
-import nord from "./nord";
 
 export function getDisplayText(setup) {
   let text = "";

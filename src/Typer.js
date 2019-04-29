@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { getDisplayText } from "./MySetups";
-import { inputs } from "./styles";
 import nord from "./nord";
 
 const StyledTyper = styled.div`
