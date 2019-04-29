@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import StyledForm from "./StyledForm";
 import { StyledListItem } from "./List";
+import uuid from "uuid/v1";
 
 const StyledQuote = styled(StyledListItem)`
   .quote-text {
@@ -18,14 +19,14 @@ const MyQuotes = ({ data, set }) => {
   const saveNewQuote = e => {
     e.preventDefault();
     if (data && newQuote.length && newTitle.length) {
-      set(data.concat([{ title: newTitle, text: newQuote }]));
+      set(data.concat([{ uuid: uuid(), title: newTitle, text: newQuote }]));
       setNewQuote("");
       setNewTitle("");
     }
   };
 
-  const deleteQuote = title => {
-    set(data.filter(quote => quote.title !== title));
+  const deleteQuote = uuid => {
+    set(data.filter(quote => quote.uuid !== uuid));
   };
 
   return (
@@ -66,7 +67,7 @@ const MyQuotes = ({ data, set }) => {
                 <StyledQuote>
                   <div className="quote-row" key={quote.title}>
                     <p>{quote.title}</p>
-                    <button onClick={e => deleteQuote(quote.title)}>
+                    <button onClick={e => deleteQuote(quote.uuid)}>
                       Delete
                     </button>
                   </div>
