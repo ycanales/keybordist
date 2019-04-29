@@ -1,33 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import createPersistedState from "use-persisted-state";
+import uuid from "uuid/v1";
 
+import "./App.css";
 import MyQuotes from "./MyQuotes";
 import Typer from "./Typer";
 import quotes from "./data/quotes";
-import "./App.css";
 import MySetups from "./MySetups";
-
-// https://overreacted.io/making-setinterval-declarative-with-react-hooks/
-function useInterval(callback, delay) {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
-}
+import MyScores from "./MyScores";
 
 const App = () => {
   const [quote, setQuote] = useState(
@@ -38,70 +19,15 @@ const App = () => {
 
   const useMyQuotesState = createPersistedState("myQuotes");
   const [myQuotes, setMyQuotes] = useMyQuotesState([]);
+
   const useMySetupsState = createPersistedState("mySetups");
   const [mySetups, setMySetups] = useMySetupsState([]);
-  const [scores, setScores] = useState([]);
 
-  const [started, setStarted] = useState(false);
-  const [finished, setFinished] = useState(false);
-  const [time, setTime] = useState(0);
-  const [wpm, setWPM] = useState(0);
-  const [input, setInput] = useState("");
-  const [okInput, setOkInput] = useState("");
-  const [errInput, setErrInput] = useState("");
+  const useMyScoresState = createPersistedState("myScores");
+  const [myScores, setMyScores] = useMyScoresState([]);
 
-  useInterval(
-    () => {
-      setTime(time + 1);
-    },
-    started && !finished ? 1000 : null
-  );
-
-  const reset = () => {
-    setStarted(false);
-    setFinished(false);
-    setTime(0);
-    setWPM(0);
-    setInput("");
-    setOkInput("");
-    setErrInput("");
+  const randomizeQuote = () => {
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
-  };
-
-  const onChange = event => {
-    const text = event.target.value;
-    setInput(text);
-
-    // Text complete
-    if (text === quote.text) {
-      setFinished(true);
-      let wpmRaw = (quote.text.length * 60) / time / 5;
-      let wpmString = wpmRaw.toString();
-      let wpmDisplay;
-      if (wpmString.indexOf(".") !== -1) {
-        wpmDisplay = wpmRaw.toFixed(2);
-        setWPM(wpmRaw.toFixed(2));
-      } else {
-        wpmDisplay = wpmString;
-        setWPM(wpmString);
-      }
-      setScores(
-        scores.concat([
-          { time, wpmRaw, wpmString: wpmDisplay, words: quote.text.length / 5 }
-        ])
-      );
-    } else if (quote.text.startsWith(text)) {
-      // Text in progress, no typos
-      setOkInput(text);
-      setErrInput("");
-    } else {
-      // Text has errors
-      setErrInput(text);
-    }
-
-    if (!started) {
-      setStarted(true);
-    }
   };
 
   return (
@@ -118,6 +44,9 @@ const App = () => {
             </NavLink>
             <NavLink activeClassName="active" to="/my-setups">
               My Setups
+            </NavLink>
+            <NavLink activeClassName="active" to="/my-scores">
+              My Scores
             </NavLink>
           </div>
 
@@ -140,22 +69,19 @@ const App = () => {
             )}
           />
           <Route
+            path="/my-scores"
+            render={props => <MyScores {...props} data={myScores} />}
+          />
+          <Route
             path="/"
             exact
             render={props => (
               <Typer
                 {...props}
-                started={started}
-                finished={finished}
-                time={time}
-                wpm={wpm}
-                reset={reset}
                 quote={quote}
-                okInput={okInput}
-                onChange={onChange}
-                input={input}
-                errInput={errInput}
-                scores={scores}
+                setQuote={setQuote}
+                myScores={myScores}
+                setMyScores={setMyScores}
                 setupsCount={mySetups.length}
                 currentSetup={currentSetup}
               />

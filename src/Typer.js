@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useInterval } from "./utils";
+import uuid from "uuid/v1";
 
 import { getDisplayText } from "./MySetups";
 import nord from "./nord";
@@ -39,20 +41,83 @@ const StyledTyper = styled.div`
 `;
 
 const Typer = ({
-  started,
-  finished,
-  time,
-  wpm,
-  reset,
+  randomizeQuote,
   quote,
-  okInput,
-  onChange,
-  input,
-  errInput,
-  scores,
+  myScores,
+  setMyScores,
   setupsCount,
   currentSetup
 }) => {
+  const [started, setStarted] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const [time, setTime] = useState(0);
+  const [wpm, setWPM] = useState(0);
+  const [input, setInput] = useState("");
+  const [okInput, setOkInput] = useState("");
+  const [errInput, setErrInput] = useState("");
+
+  useInterval(
+    () => {
+      setTime(time + 1);
+    },
+    started && !finished ? 1000 : null
+  );
+
+  const reset = () => {
+    setStarted(false);
+    setFinished(false);
+    setTime(0);
+    setWPM(0);
+    setInput("");
+    setOkInput("");
+    setErrInput("");
+    randomizeQuote();
+  };
+
+  const onChange = event => {
+    const text = event.target.value;
+    setInput(text);
+
+    // Text complete
+    if (text === quote.text) {
+      setFinished(true);
+      let wpmRaw = (quote.text.length * 60) / time / 5;
+      let wpmString = wpmRaw.toString();
+      let wpmDisplay;
+      if (wpmString.indexOf(".") !== -1) {
+        wpmDisplay = wpmRaw.toFixed(2);
+        setWPM(wpmRaw.toFixed(2));
+      } else {
+        wpmDisplay = wpmString;
+        setWPM(wpmString);
+      }
+      setMyScores(
+        myScores.concat([
+          {
+            uuid: uuid(),
+            quoteUuid: quote.uuid,
+            date: new Date().toISOString(),
+            time,
+            wpmRaw,
+            wpmString: wpmDisplay,
+            words: quote.text.length / 5
+          }
+        ])
+      );
+    } else if (quote.text.startsWith(text)) {
+      // Text in progress, no typos
+      setOkInput(text);
+      setErrInput("");
+    } else {
+      // Text has errors
+      setErrInput(text);
+    }
+
+    if (!started) {
+      setStarted(true);
+    }
+  };
+
   return (
     <StyledTyper>
       {!started && (
@@ -96,16 +161,6 @@ const Typer = ({
         disabled={finished}
         style={errInput ? { color: "#B48EAD" } : {}}
       />
-
-      {scores.length > 0 && (
-        <ul>
-          {scores.map(r => (
-            <li>
-              {r.wpmString} WPM - {r.words} words in {r.time} seconds.
-            </li>
-          ))}
-        </ul>
-      )}
     </StyledTyper>
   );
 };
