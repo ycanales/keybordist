@@ -46,7 +46,8 @@ const Typer = ({
   myScores,
   setMyScores,
   setupsCount,
-  currentSetup
+  currentSetup,
+  ...rest
 }) => {
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -96,6 +97,7 @@ const Typer = ({
           {
             uuid: uuid(),
             quoteUuid: quote.uuid,
+            setupUuid: currentSetup.uuid,
             date: new Date().toISOString(),
             time,
             wpmRaw,

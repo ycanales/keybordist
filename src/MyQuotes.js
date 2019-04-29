@@ -12,7 +12,7 @@ const StyledQuote = styled(StyledListItem)`
   }
 `;
 
-const MyQuotes = ({ data, set }) => {
+const MyQuotes = ({ data, set, setQuote, history, ...rest }) => {
   const [newQuote, setNewQuote] = useState("");
   const [newTitle, setNewTitle] = useState("");
 
@@ -67,9 +67,23 @@ const MyQuotes = ({ data, set }) => {
                 <StyledQuote key={quote.uuid}>
                   <div className="quote-row">
                     <p>{quote.title}</p>
-                    <button onClick={e => deleteQuote(quote.uuid)}>
-                      Delete
-                    </button>
+                    <div className="row setup-row-actions">
+                      <button
+                        className="select"
+                        onClick={e => {
+                          setQuote(quote);
+                          history.push("/");
+                        }}
+                      >
+                        Play
+                      </button>
+                      <button
+                        className="delete"
+                        onClick={e => deleteQuote(quote.uuid)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                   <p className="text quote-text">{quote.text}</p>
                 </StyledQuote>

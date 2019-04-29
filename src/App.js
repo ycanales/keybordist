@@ -53,7 +53,12 @@ const App = () => {
           <Route
             path="/my-quotes"
             render={props => (
-              <MyQuotes {...props} data={myQuotes} set={setMyQuotes} />
+              <MyQuotes
+                {...props}
+                data={myQuotes}
+                set={setMyQuotes}
+                setQuote={setQuote}
+              />
             )}
           />
           <Route
@@ -84,6 +89,7 @@ const App = () => {
                 setMyScores={setMyScores}
                 setupsCount={mySetups.length}
                 currentSetup={currentSetup}
+                randomizeQuote={randomizeQuote}
               />
             )}
           />
