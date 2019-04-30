@@ -34,6 +34,12 @@ const StyledTyper = styled.div`
       white-space: pre-line;
     }
   }
+  .quote-citation {
+    font-size: 1rem;
+    margin-top: 1rem;
+    text-align: right;
+    color: ${nord[3]};
+  }
   textarea {
     font-size: 27px;
     padding: 21px;
@@ -151,11 +157,13 @@ const Typer = ({
           <button onClick={reset}>Restart.</button>
         </h2>
       )}
-      {started && !finished && <h2>{time} seconds elapsed.</h2>}
+      {/*started && !finished && <h2>{time} seconds elapsed.</h2>*/}
+      {started && !finished && <h2>Typing&hellip;</h2>}
       <div className="quote">
         <p>{quote.text}</p>
         <p className="progress">{okInput}</p>
       </div>
+      <p className="quote-citation">&mdash;{quote.title}</p>
       <textarea
         value={input}
         onChange={onChange}
