@@ -7,7 +7,7 @@ export const StyledListItem = styled.div`
   margin-bottom: 1.5rem;
   ${props =>
     props.active
-      ? `border: 4px dashed ${nord[9]}`
+      ? `border: 4px dashed ${nord[15]}`
       : `border: 4px dashed ${nord[1]}`};
   padding: 12px;
 
