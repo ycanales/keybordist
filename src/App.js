@@ -75,7 +75,9 @@ const App = () => {
           />
           <Route
             path="/my-scores"
-            render={props => <MyScores {...props} data={myScores} />}
+            render={props => (
+              <MyScores {...props} data={myScores} setups={mySetups} />
+            )}
           />
           <Route
             path="/"

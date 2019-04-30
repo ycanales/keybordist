@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 export default {
   /* Polar Night */
   0: "#2E3440", // Dark: background. Bright: plain text.
@@ -25,3 +27,7 @@ export default {
   14: "#A3BE8C", // Success.
   15: "#B48EAD" // Uncommon functionality.
 };
+
+export const UncommonSpan = styled.span`
+  color: #b48ead;
+`;

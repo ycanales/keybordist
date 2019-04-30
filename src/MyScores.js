@@ -1,8 +1,9 @@
 import React from "react";
 import StyledForm from "./StyledForm";
+import { getDisplayText } from "./MySetups";
+import { UncommonSpan } from "./nord";
 
-const MyScores = ({ data, ...rest }) => {
-  console.log(data);
+const MyScores = ({ data, setups, ...rest }) => {
   if (data && data.length) {
     return (
       <StyledForm>
@@ -14,7 +15,12 @@ const MyScores = ({ data, ...rest }) => {
         <ul>
           {data.map(score => (
             <li key={score.uuid}>
-              {new Date(score.date).toLocaleDateString()} - {score.wpmString}{" "}
+              <UncommonSpan>
+                {getDisplayText(
+                  setups.find(setup => setup.uuid === score.setupUuid)
+                )}
+              </UncommonSpan>{" "}
+              - {new Date(score.date).toLocaleDateString()} - {score.wpmString}{" "}
               WPM - {score.words} words in {score.time} seconds.
             </li>
           ))}
