@@ -71,9 +71,13 @@ a {
   color: #5e81ac;
 }
 
-.App-header {
-  padding: 100px;
+#root {
+  display: flex;
+}
 
+.App-header {
+  max-width: 1440px;
+  padding: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
