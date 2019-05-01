@@ -3,13 +3,17 @@ import StyledForm from "./StyledForm";
 import { StyledListItem } from "./List";
 import uuid from "uuid/v1";
 
-export function getDisplayText(setup) {
+export function getDisplayText(setup, dash = false) {
+  if (!setup) return "";
   let text = "";
   if (setup.keyboard) text += ` ${setup.keyboard}`;
   if (setup.layout) text += ` ${setup.layout}`;
   if (setup.keycaps) text += ` ${setup.keycaps}`;
   if (setup.switches) text += ` ${setup.switches}`;
   if (setup.other) text += ` ${setup.other}`;
+  if (dash) {
+    return text.trim() + " - ";
+  }
   return text.trim();
 }
 
