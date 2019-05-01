@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import createPersistedState from "use-persisted-state";
-import uuid from "uuid/v1";
+import { CSSTransitionGroup } from "react-transition-group";
 
 import "./App.css";
 import MyQuotes from "./MyQuotes";
@@ -26,6 +26,8 @@ const App = () => {
   const useMyScoresState = createPersistedState("myScores");
   const [myScores, setMyScores] = useMyScoresState([]);
 
+  const [menuVisible, setMenuVisibility] = useState(true);
+
   const randomizeQuote = () => {
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   };
@@ -34,21 +36,33 @@ const App = () => {
     <Router>
       <div className="App">
         <header className="App-header">
-          <div className="App-header-menu">
-            <p style={{ fontSize: 200 }}>⌨</p>
-            <NavLink exact activeClassName="active" to="/">
-              Home
-            </NavLink>
-            <NavLink activeClassName="active" to="/my-quotes">
-              My Quotes
-            </NavLink>
-            <NavLink activeClassName="active" to="/my-setups">
-              My Setups
-            </NavLink>
-            <NavLink activeClassName="active" to="/my-scores">
-              My Scores
-            </NavLink>
-          </div>
+          <CSSTransitionGroup
+            transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={200}
+            transitionEnter={true}
+            transitionEnterTimeout={200}
+            transitionLeave={true}
+            transitionLeaveTimeout={500}
+          >
+            {menuVisible ? (
+              <div className="App-header-menu">
+                <p style={{ fontSize: 200 }}>⌨</p>
+                <NavLink exact activeClassName="active" to="/">
+                  Home
+                </NavLink>
+                <NavLink activeClassName="active" to="/my-quotes">
+                  My Quotes
+                </NavLink>
+                <NavLink activeClassName="active" to="/my-setups">
+                  My Setups
+                </NavLink>
+                <NavLink activeClassName="active" to="/my-scores">
+                  My Scores
+                </NavLink>
+              </div>
+            ) : null}
+          </CSSTransitionGroup>
 
           <Route
             path="/my-quotes"
@@ -92,6 +106,7 @@ const App = () => {
                 setupsCount={mySetups.length}
                 currentSetup={currentSetup}
                 randomizeQuote={randomizeQuote}
+                setMenuVisibility={setMenuVisibility}
               />
             )}
           />

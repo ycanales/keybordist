@@ -53,6 +53,7 @@ const Typer = ({
   setMyScores,
   setupsCount,
   currentSetup,
+  setMenuVisibility,
   ...rest
 }) => {
   const [started, setStarted] = useState(false);
@@ -112,6 +113,7 @@ const Typer = ({
           }
         ])
       );
+      setMenuVisibility(true);
     } else if (quote.text.startsWith(text)) {
       // Text in progress, no typos
       setOkInput(text);
@@ -158,7 +160,7 @@ const Typer = ({
         </h2>
       )}
       {/*started && !finished && <h2>{time} seconds elapsed.</h2>*/}
-      {started && !finished && <h2>Typing&hellip;</h2>}
+      {/*started && !finished && <h2>Typing&hellip;</h2>*/}
       <div className="quote">
         <p>{quote.text}</p>
         <p className="progress">{okInput}</p>
@@ -167,6 +169,11 @@ const Typer = ({
       <textarea
         value={input}
         onChange={onChange}
+        onFocus={() => {
+          setMenuVisibility(false);
+          window.scrollTo(0, 0);
+        }}
+        onBlur={() => setMenuVisibility(true)}
         rows="10"
         disabled={finished}
         style={errInput ? { color: "#B48EAD" } : {}}
