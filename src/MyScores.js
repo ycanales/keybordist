@@ -17,11 +17,10 @@ const MyScores = ({ data, setups, ...rest }) => {
             <li key={score.uuid}>
               <UncommonSpan>
                 {getDisplayText(
-                  setups.find(setup => setup.uuid === score.setupUuid),
-                  true
+                  setups.find(setup => setup.uuid === score.setupUuid)
                 )}
-              </UncommonSpan>
-              {new Date(score.date).toLocaleDateString()} - {score.wpmString}{" "}
+              </UncommonSpan>{" "}
+              - {new Date(score.date).toLocaleDateString()} - {score.wpmString}{" "}
               WPM - {score.words} words in {score.time} seconds.
             </li>
           ))}
