@@ -112,7 +112,31 @@ const App = () => {
           />
         </header>
         <footer>
-          created by&nbsp;<a href="http://ycanales.com">ycanales</a>
+          <p>
+            created by&nbsp;<a href="http://ycanales.com">ycanales</a>.
+          </p>
+          <p>
+            get notified of new features by{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://sibforms.com/serve/MUIEAAJ0fmIau7uNjkvwevVPs36vnjG13JmiCBEI3eiiBQOz8iyUqJsroJJXAFZvvyQErtTf846AtZy4YhgpGapg4IOnfw9tkmzOglDbClZfZsER9u3RFTAlLHcMkAJL7TMakSd7572-B6Jnbl4H1MZzXqnxcwcSO2uszoH8MjHXwqektEqk6_uLpWdL6hftbW1eYyf1eyJbL5EU"
+            >
+              subscribing to the newsletter
+            </a>
+            .
+          </p>
+          <p>
+            suggest features or quotes at{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://twitter.com/tuxcayc"
+            >
+              @tuxcayc
+            </a>
+            .
+          </p>
         </footer>
       </div>
     </Router>
