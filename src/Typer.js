@@ -43,6 +43,15 @@ const StyledTyper = styled.div`
         &.quote--active-line {
           color: inherit;
         }
+        .quote-word--active {
+          color: ${nord[13]};
+        }
+        .quote-word--done {
+          color: ${nord[3]};
+        }
+        .quote-word--error {
+          color: ${nord[11]};
+        }
       }
     }
   }
@@ -82,11 +91,13 @@ const Typer = ({
 
   const [currentLine, setCurrentLine] = useState(0);
   const [lineInput, setLineInput] = useState("");
+  const [currentLineWord, setCurrentLineWord] = useState(0);
+  const [currentLineTypedWords, setCurrentLineTypedWords] = useState([]);
+  const [lineWords, setLineWords] = useState([]);
 
   const MAX_LENGTH = 70;
   const TYPER = "split";
   const lines = stringToLines(quote.text, MAX_LENGTH);
-  console.log(lines);
 
   useInterval(
     () => {
@@ -101,19 +112,48 @@ const Typer = ({
     setTime(0);
     setWPM(0);
     randomizeQuote();
+    setLineInput("");
+    setLineWords([]);
+    setCurrentLineWord(0);
   };
 
   const onChangeLine = event => {
+    setLineInput(event.target.value);
+
+    // At the beginning of each line, split and store the words.
+    if (lineWords.length === 0) {
+      setLineWords(lines[currentLine].split(" "));
+    }
+
+    // Store typed words and highlight the current word.
+    const lineTypedWords = lineInput.split(" ");
+    setCurrentLineTypedWords(lineTypedWords);
+    const doneWords = lineTypedWords.filter(
+      (typedWord, i) => typedWord === lineWords[i]
+    );
+    setCurrentLineWord(doneWords.length);
+
+    // console.log(
+    //   "typing word number",
+    //   currentLineWord,
+    //   lineTypedWords[currentLineWord]
+    // );
+    // console.log("should be", lineWords[currentLineWord]);
+
     if (
+      // Every line must end in space...
       (currentLine < lines.length - 1 &&
         event.target.value === lines[currentLine] + " ") ||
+      // ...except for the last one.
       (currentLine === lines.length - 1 &&
-        event.target.value == lines[currentLine])
+        event.target.value === lines[currentLine])
     ) {
+      // Line is complete.
       setLineInput("");
       setCurrentLine(currentLine + 1);
-    } else {
-      setLineInput(event.target.value);
+      setCurrentLineWord(0);
+      setCurrentLineTypedWords([]);
+      setLineWords([lines[currentLine].split(" ")]);
     }
   };
 
@@ -144,6 +184,32 @@ const Typer = ({
       ])
     );
     setMenuVisibility(true);
+  };
+
+  const wordInProgress = (lineNum, wordNum) =>
+    currentLine === lineNum &&
+    currentLineWord === wordNum &&
+    lineWords[wordNum] &&
+    (lineWords[wordNum].indexOf(currentLineTypedWords[wordNum]) !== -1 ||
+      !currentLineTypedWords[wordNum]);
+
+  const wordMistyped = (lineNum, wordNum) =>
+    currentLine === lineNum &&
+    currentLineWord === wordNum &&
+    lineWords[wordNum] &&
+    lineWords[wordNum].indexOf(currentLineTypedWords[wordNum]) === -1;
+
+  const wordStyle = (lineNum, wordNum) => {
+    if (wordInProgress(lineNum, wordNum)) {
+      return "quote-word--active";
+    }
+    if (wordMistyped(lineNum, wordNum)) {
+      return "quote-word--error";
+    }
+    if (currentLine === lineNum && currentLineWord > wordNum) {
+      return "quote-word--done";
+    }
+    return "";
   };
 
   return (
@@ -187,7 +253,11 @@ const Typer = ({
                 className={i === currentLine ? "quote--active-line" : ""}
                 key={i}
               >
-                {line}
+                {line.split(" ").map((word, k) => (
+                  <span key={k} className={wordStyle(i, k)}>
+                    {word}{" "}
+                  </span>
+                ))}
               </p>
               {i === currentLine ? (
                 <input
