@@ -141,7 +141,7 @@ export default [
     guid: "a42592eb-915e-402a-8bbc-4c3facdcff24",
     title: "Douglas Adams, The Hitchhiker's Guide to the Galaxy",
     text:
-      "The Total Perspective Vortex derives its picture of the whole Universe on the principle of extrapolated matter analyses.To explain - since every piece of matter in the Universe is in some way affected by every other piece of matter in the Universe, it is in theory possible to extrapolate the whole of creation - every sun, every planet, their orbits, their composition and their economic and social history from, say, one small piece of fairy cake. The man who invented the Total Perspective Vortex did so basically in order to annoy his wife."
+      "The Total Perspective Vortex derives its picture of the whole Universe on the principle of extrapolated matter analyses. To explain - since every piece of matter in the Universe is in some way affected by every other piece of matter in the Universe, it is in theory possible to extrapolate the whole of creation - every sun, every planet, their orbits, their composition and their economic and social history from, say, one small piece of fairy cake. The man who invented the Total Perspective Vortex did so basically in order to annoy his wife."
   },
   {
     guid: "f64476e2-92d6-4fb4-b124-b2219c27b995",
