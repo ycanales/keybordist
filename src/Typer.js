@@ -114,6 +114,7 @@ const Typer = ({
     randomizeQuote();
     setLineInput("");
     setLineWords([]);
+    setCurrentLine(0);
     setCurrentLineWord(0);
   };
 
