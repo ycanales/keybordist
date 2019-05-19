@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import uuid from "uuid/v1";
 
-import { getDisplayText } from "./MySetups";
 import TyperClassic from "./TyperClassic";
+import TyperHeader from "./TyperHeader";
+import TyperInline from "./TyperInline";
 import { stringToLines, useInterval } from "./utils";
 import nord from "./nord";
 
@@ -127,40 +127,40 @@ const Typer = ({
     }
     setLineInput(event.target.value);
 
+    if (!started && !finished) {
+      setStarted(true);
+    }
+
     // At the beginning of each line, split and store the words.
     if (lineWords.length === 0) {
       setLineWords(lines[currentLine].split(" "));
     }
 
     // Store typed words and highlight the current word.
-    const lineTypedWords = lineInput.split(" ");
+    const lineTypedWords = event.target.value.split(" ");
     setCurrentLineTypedWords(lineTypedWords);
     const doneWords = lineTypedWords.filter(
       (typedWord, i) => typedWord === lineWords[i]
     );
     setCurrentLineWord(doneWords.length);
 
-    // console.log(
-    //   "typing word number",
-    //   currentLineWord,
-    //   lineTypedWords[currentLineWord]
-    // );
-    // console.log("should be", lineWords[currentLineWord]);
-
     if (
-      // Every line must end in space...
-      (currentLine < lines.length - 1 &&
-        event.target.value === lines[currentLine] + " ") ||
-      // ...except for the last one.
-      (currentLine === lines.length - 1 &&
-        event.target.value === lines[currentLine])
+      currentLine < lines.length - 1 &&
+      event.target.value === lines[currentLine] + " "
     ) {
       // Line is complete.
       setLineInput("");
-      setCurrentLine(currentLine + 1);
       setCurrentLineWord(0);
       setCurrentLineTypedWords([]);
-      setLineWords([lines[currentLine].split(" ")]);
+      setLineWords(lines[currentLine + 1].split(" "));
+      setCurrentLine(currentLine + 1);
+    } else if (
+      // ...except for the last one.
+      currentLine === lines.length - 1 &&
+      event.target.value === lines[currentLine]
+    ) {
+      // quote is complete
+      onComplete();
     }
   };
 
@@ -200,19 +200,50 @@ const Typer = ({
     (lineWords[wordNum].indexOf(currentLineTypedWords[wordNum]) !== -1 ||
       !currentLineTypedWords[wordNum]);
 
-  const wordMistyped = (lineNum, wordNum) =>
+  const wordMistyped2 = (lineNum, wordNum) =>
     currentLine === lineNum &&
     currentLineWord === wordNum &&
     lineWords[wordNum] &&
     lineWords[wordNum].indexOf(currentLineTypedWords[wordNum]) === -1;
 
+  const wordMistyped = (lineNum, wordNum) => {
+    const lineMatch = currentLine === lineNum;
+    const wordMatch = currentLineWord === wordNum;
+    const word = lineWords[wordNum];
+    const mistyped =
+      !word || !currentLineTypedWords[wordNum]
+        ? false
+        : word.indexOf(currentLineTypedWords[wordNum]) === -1;
+
+    /*if (lineMatch && wordMatch) {
+      console.log("");
+      console.log("line input", lineInput);
+      console.log("current line typed words", currentLineTypedWords);
+      console.log("typing word: ", currentLineTypedWords[wordNum]);
+      console.log(
+        "lineMatch",
+        lineMatch,
+        "wordMatch",
+        wordMatch,
+        "word",
+        word,
+        "mistyped",
+        mistyped
+      );
+    }*/
+
+    return lineMatch && wordMatch && word && mistyped;
+  };
+
   const wordStyle = (lineNum, wordNum) => {
-    if (wordInProgress(lineNum, wordNum)) {
-      return "quote-word--active";
-    }
     if (wordMistyped(lineNum, wordNum)) {
       return "quote-word--error";
     }
+
+    if (wordInProgress(lineNum, wordNum)) {
+      return "quote-word--active";
+    }
+
     if (currentLine === lineNum && currentLineWord > wordNum) {
       return "quote-word--done";
     }
@@ -221,62 +252,26 @@ const Typer = ({
 
   return (
     <StyledTyper>
-      {!started && (
-        <p className="setup">
-          {currentSetup ? (
-            <>
-              <span>Typing with&nbsp;</span>
-              <span className="setup-highlight">
-                {getDisplayText(currentSetup)}
-              </span>
-            </>
-          ) : (
-            "No current setup. "
-          )}
-          <Link to="/my-setups">
-            {currentSetup ? "" : setupsCount ? " Select one" : "Add one"}
-          </Link>
-          .
-        </p>
-      )}
-      {!started && (
-        <h2>
-          Type to begin. <button onClick={reset}>Another quote?</button>
-        </h2>
-      )}
-      {started && finished && (
-        <h2>
-          Finished in {time} seconds. Your speed was {wpm} WPM.{" "}
-          <button onClick={reset}>Restart.</button>
-        </h2>
-      )}
-      {/*started && !finished && <h2>{time} seconds elapsed.</h2>*/}
-      {/*started && !finished && <h2>Typing&hellip;</h2>*/}
+      <TyperHeader
+        started={started}
+        finished={finished}
+        currentSetup={currentSetup}
+        setupsCount={setupsCount}
+        reset={reset}
+        time={time}
+        wpm={wpm}
+      />
+
       {TYPER === "split" ? (
-        <div className="quote quote--split">
-          {lines.map((line, i) => (
-            <>
-              <p
-                className={i === currentLine ? "quote--active-line" : ""}
-                key={i}
-              >
-                {line.split(" ").map((word, k) => (
-                  <span key={k} className={wordStyle(i, k)}>
-                    {word}{" "}
-                  </span>
-                ))}
-              </p>
-              {i === currentLine ? (
-                <input
-                  autoFocus
-                  className="line-input"
-                  onChange={onChangeLine}
-                  value={lineInput}
-                />
-              ) : null}
-            </>
-          ))}
-        </div>
+        <TyperInline
+          currentLine={currentLine}
+          finished={finished}
+          lineInput={lineInput}
+          lines={lines}
+          onChangeLine={onChangeLine}
+          quote={quote}
+          wordStyle={wordStyle}
+        />
       ) : TYPER === "classic" ? (
         <TyperClassic
           finished={finished}
