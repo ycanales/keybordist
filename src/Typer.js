@@ -118,6 +118,13 @@ const Typer = ({
   };
 
   const onChangeLine = event => {
+    // Don't allow more than one space.
+    if (
+      event.target.value[event.target.value.length - 1] === " " &&
+      event.target.value[event.target.value.length - 2] === " "
+    ) {
+      return;
+    }
     setLineInput(event.target.value);
 
     // At the beginning of each line, split and store the words.
