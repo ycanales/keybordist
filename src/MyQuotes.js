@@ -19,7 +19,16 @@ const MyQuotes = ({ data, set, setQuote, history, ...rest }) => {
   const saveNewQuote = e => {
     e.preventDefault();
     if (data && newQuote.length && newTitle.length) {
-      set(data.concat([{ uuid: uuid(), title: newTitle, text: newQuote }]));
+      set(
+        data.concat([
+          {
+            uuid: uuid(),
+            title: newTitle,
+            text: newQuote,
+            length: newQuote.length
+          }
+        ])
+      );
       setNewQuote("");
       setNewTitle("");
     }

@@ -30,7 +30,8 @@ const StyledForm = styled.div`
     margin-bottom: 1em;
   }
   input,
-  textarea {
+  textarea,
+  select {
     color: #eceff4;
     margin-top: 0.5em;
   }
@@ -49,6 +50,36 @@ const StyledForm = styled.div`
 
   .allquotes-container input {
     margin-bottom: 1em;
+  }
+
+  .allquotes-actions {
+    align-items: center;
+    margin-bottom: 2em;
+
+    input,
+    label,
+    select {
+      margin: 0;
+      padding: 0;
+    }
+
+    .search-label,
+    .sort-label {
+      margin-right: 1em;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      margin-right: 1.5em;
+      max-width: 40%;
+      padding: 0.5em;
+    }
+
+    .search-input,
+    .sort-select {
+      height: 2em;
+      font-size: 1em;
+    }
   }
 `;
 

@@ -34,14 +34,33 @@ const AllQuotes = ({ data, set, setQuote, history, ...rest }) => {
     }
   };
 
+  const sortQuotes = event => {
+    const sort = event.target.value;
+    const sorted = [...quotes];
+    if (sort === "+length") {
+      sorted.sort((a, b) => a.length - b.length);
+    } else if (sort === "-length") {
+      sorted.sort((a, b) => b.length - a.length);
+    }
+    setQuotes(sorted);
+  };
+
   return (
     <StyledForm>
       <h2 className="message">Currently we have {data.length} quotes.</h2>
 
       <div className="row container allquotes-container">
         <div className="list-right">
-          <label>Search</label>
-          <input onChange={filterQuotes} />
+          <div className="row  allquotes-actions">
+            <label className="search-label">Search</label>
+            <input className="search-input" onChange={filterQuotes} />
+
+            <label className="sort-label">Sort by</label>
+            <select className="sort-select" onChange={sortQuotes}>
+              <option value="+length">Shortest first</option>
+              <option value="-length">Longest first</option>
+            </select>
+          </div>
 
           {quotes.map(quote => (
             <StyledQuote key={quote.uuid}>
