@@ -170,7 +170,8 @@ input {
   box-shadow: none;
 }
 
-button {
+button,
+.typerheader--allquotes-link {
   background: none !important;
   color: #ebcb8b;
   border: none;
@@ -181,7 +182,7 @@ button {
 }
 
 button:disabled {
-  color: #4c566a;
+  color: #b1bace;
   border-bottom: 2px solid #4c566a;
   cursor: not-allowed;
 }
@@ -190,4 +191,18 @@ button:hover:enabled {
   cursor: pointer;
   color: #a3be8c;
   border-bottom: 2px solid #a3be8c;
+}
+
+.typerheader--allquotes-link {
+  text-decoration: none;
+  color: #ebcb8b;
+  border-bottom: 2px solid #ebcb8b;
+}
+
+.typerheader--allquotes-link:visited {
+  color: #ebcb8b;
+}
+
+.typerheader--allquotes-link:hover {
+  color: #ebcb8b;
 }

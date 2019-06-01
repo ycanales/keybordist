@@ -33,7 +33,10 @@ const TyperHeader = ({
 
       {!started && (
         <h2>
-          Type to begin. <button onClick={reset}>Another quote?</button>
+          Type to begin. <button onClick={reset}>Random quote.</button>{" "}
+          <Link to="/all-quotes" className="typerheader--allquotes-link">
+            Choose quote.
+          </Link>
         </h2>
       )}
       {started && finished && (

@@ -46,6 +46,10 @@ const StyledForm = styled.div`
     margin-top: 42px;
     font-size: 28px;
   }
+
+  .allquotes-container input {
+    margin-bottom: 1em;
+  }
 `;
 
 export default StyledForm;

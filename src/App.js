@@ -9,6 +9,7 @@ import Typer from "./Typer";
 import quotes from "./data/quotes";
 import MySetups from "./MySetups";
 import MyScores from "./MyScores";
+import AllQuotes from "./AllQuotes";
 
 const App = () => {
   const [quote, setQuote] = useState(
@@ -51,6 +52,9 @@ const App = () => {
                 <NavLink exact activeClassName="active" to="/">
                   Home
                 </NavLink>
+                <NavLink activeClassName="active" to="/all-quotes">
+                  All Quotes
+                </NavLink>
                 <NavLink activeClassName="active" to="/my-quotes">
                   My Quotes
                 </NavLink>
@@ -63,6 +67,13 @@ const App = () => {
               </div>
             ) : null}
           </CSSTransitionGroup>
+
+          <Route
+            path="/all-quotes"
+            render={props => (
+              <AllQuotes {...props} data={quotes} setQuote={setQuote} />
+            )}
+          />
 
           <Route
             path="/my-quotes"
