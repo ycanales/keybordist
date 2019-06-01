@@ -36,6 +36,11 @@ const AllQuotes = ({ data, set, setQuote, history, ...rest }) => {
 
   const sortQuotes = event => {
     const sort = event.target.value;
+    if (sort === "") {
+      setQuotes(data);
+      return;
+    }
+
     const sorted = [...quotes];
     if (sort === "+length") {
       sorted.sort((a, b) => a.length - b.length);
@@ -57,6 +62,7 @@ const AllQuotes = ({ data, set, setQuote, history, ...rest }) => {
 
             <label className="sort-label">Sort by</label>
             <select className="sort-select" onChange={sortQuotes}>
+              <option value="" />
               <option value="+length">Shortest first</option>
               <option value="-length">Longest first</option>
             </select>
