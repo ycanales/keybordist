@@ -94,6 +94,7 @@ const Typer = ({
   const [currentLineWord, setCurrentLineWord] = useState(0);
   const [currentLineTypedWords, setCurrentLineTypedWords] = useState([]);
   const [lineWords, setLineWords] = useState([]);
+  const [mistypedWordsLog, setMistypedWordsLog] = useState([]);
 
   const MAX_LENGTH = 70;
   const TYPER = "split";
@@ -144,6 +145,7 @@ const Typer = ({
       (typedWord, i) => typedWord === lineWords[i]
     );
     setCurrentLineWord(doneWords.length);
+    wordMistyped(currentLine, currentLineWord, true);
 
     if (
       currentLine < lines.length - 1 &&
@@ -207,7 +209,7 @@ const Typer = ({
     lineWords[wordNum] &&
     lineWords[wordNum].indexOf(currentLineTypedWords[wordNum]) === -1;
 
-  const wordMistyped = (lineNum, wordNum) => {
+  const wordMistyped = (lineNum, wordNum, saveErrors) => {
     const lineMatch = currentLine === lineNum;
     const wordMatch = currentLineWord === wordNum;
     const word = lineWords[wordNum];
@@ -216,22 +218,31 @@ const Typer = ({
         ? false
         : word.indexOf(currentLineTypedWords[wordNum]) === -1;
 
-    /*if (lineMatch && wordMatch) {
-      console.log("");
-      console.log("line input", lineInput);
-      console.log("current line typed words", currentLineTypedWords);
-      console.log("typing word: ", currentLineTypedWords[wordNum]);
-      console.log(
-        "lineMatch",
-        lineMatch,
-        "wordMatch",
-        wordMatch,
-        "word",
-        word,
-        "mistyped",
-        mistyped
-      );
-    }*/
+    // This function is called a lot of times to apply the proper
+    // style for every word, so we save the errors only on input
+    // by requiring the "saveErrors" argument, this is used in the
+    // "onChangeLine" function.
+    if (saveErrors && lineMatch && wordMatch && mistyped) {
+      const mistypeObj = mistypedWordsLog[wordNum]
+        ? { ...mistypedWordsLog[wordNum] }
+        : {
+            wordNum,
+            word,
+            errors: []
+          };
+      if (
+        !mistypeObj.errors.length ||
+        mistypeObj.errors.indexOf(currentLineTypedWords[wordNum]) === -1
+      ) {
+        mistypeObj.errors.push(currentLineTypedWords[wordNum]);
+        const updatedMistypedWordsLog = [
+          ...mistypedWordsLog.filter(mw => mw.wordNum !== wordNum),
+          mistypeObj
+        ];
+        setMistypedWordsLog(updatedMistypedWordsLog);
+        console.log(mistypedWordsLog);
+      }
+    }
 
     return lineMatch && wordMatch && word && mistyped;
   };
