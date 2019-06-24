@@ -6,9 +6,7 @@ import uuid from "uuid/v1";
 
 const StyledQuote = styled(StyledListItem)`
   .quote-text {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+    
   }
 `;
 
@@ -56,7 +54,7 @@ const AllQuotes = ({ data, set, setQuote, history, ...rest }) => {
 
       <div className="row container allquotes-container">
         <div className="list-right">
-          <div className="row  allquotes-actions">
+          <div className="row allquotes-actions">
             <label className="search-label">Search</label>
             <input className="search-input" onChange={filterQuotes} />
 
