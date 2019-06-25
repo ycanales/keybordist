@@ -6,7 +6,6 @@ import uuid from "uuid/v1";
 
 const StyledQuote = styled(StyledListItem)`
   .quote-text {
-    
   }
 `;
 
@@ -22,11 +21,11 @@ const AllQuotes = ({ data, set, setQuote, history, ...rest }) => {
       const titleMatches = data.filter(
         q => q.title.toLowerCase().indexOf(query) !== -1
       );
-      const titleMatchesIds = titleMatches.map(q => q.guid);
+      const titleMatchesIds = titleMatches.map(q => q.uuid);
       const textMatches = data.filter(
         q =>
           q.text.toLowerCase().indexOf(query) !== -1 &&
-          titleMatchesIds.indexOf(q.guid) === -1
+          titleMatchesIds.indexOf(q.uuid) === -1
       );
       setQuotes(titleMatches.concat(textMatches));
     }

@@ -23,23 +23,21 @@ export function useInterval(callback, delay) {
 
 export function stringToLines(text, maxLength) {
   const lines = [];
-  if (text.length > maxLength) {
-    let i = 0;
-    text.split(" ").forEach(word => {
-      if (
-        lines &&
-        lines[i] &&
-        lines[i].length < maxLength &&
-        lines[i].length + word.length + 1 <= maxLength
-      ) {
-        lines[i] = `${lines[i]} ${word}`;
-      } else if (!lines[i]) {
-        lines[i] = word;
-      } else {
-        i += 1;
-        lines[i] = word;
-      }
-    });
-  }
+  let i = 0;
+  text.split(" ").forEach(word => {
+    if (
+      lines &&
+      lines[i] &&
+      lines[i].length < maxLength &&
+      lines[i].length + word.length + 1 <= maxLength
+    ) {
+      lines[i] = `${lines[i]} ${word}`;
+    } else if (!lines[i]) {
+      lines[i] = word;
+    } else {
+      i += 1;
+      lines[i] = word;
+    }
+  });
   return lines;
 }
