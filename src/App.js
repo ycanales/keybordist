@@ -148,6 +148,9 @@ const App = () => {
             </a>
             .
           </p>
+          <p>
+            v2019.7.20
+          </p>
         </footer>
       </div>
     </Router>
