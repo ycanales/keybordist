@@ -48,7 +48,7 @@ const App = () => {
           >
             {menuVisible ? (
               <div className="App-header-menu">
-                <p style={{ fontSize: 200 }}>⌨</p>
+                <img class="logo" src="keybordist.svg" alt="Keybordist" />
                 <NavLink exact activeClassName="active" to="/">
                   Home
                 </NavLink>
