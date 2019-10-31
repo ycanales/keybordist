@@ -48,7 +48,7 @@ const App = () => {
           >
             {menuVisible ? (
               <div className="App-header-menu">
-                <img class="logo" src="keybordist.svg" alt="Keybordist" />
+                <img className="logo" src="keybordist.svg" alt="Keybordist" />
                 <NavLink exact activeClassName="active" to="/">
                   Home
                 </NavLink>
@@ -148,9 +148,7 @@ const App = () => {
             </a>
             .
           </p>
-          <p>
-            v2019.7.20
-          </p>
+          <p>v2019.7.20</p>
         </footer>
       </div>
     </Router>
