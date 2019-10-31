@@ -12,6 +12,26 @@ const StyledForm = styled.div`
     flex: 1 0 50%;
     justify-content: space-between;
   }
+
+  table {
+    border: 4px dashed #3b4252;
+  }
+
+  th {
+    text-align: left;
+    padding: 8px 16px;
+    border-bottom: 4px dashed #3b4252;
+  }
+
+  th:not(:first-child),
+  td:not(:first-child) {
+    border-left: 4px dashed #3b4252;
+  }
+
+  td {
+    padding: 4px 16px;
+  }
+
   .list-right {
     flex: 1 0 50%;
     margin-left: 2rem;

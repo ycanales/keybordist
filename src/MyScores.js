@@ -12,19 +12,38 @@ const MyScores = ({ data, setups, ...rest }) => {
         ) : (
           <h2 className="message">You have played {data.length} times.</h2>
         )}
-        <ul>
-          {data.map(score => (
-            <li key={score.uuid}>
-              <UncommonSpan>
-                {getDisplayText(
-                  setups.find(setup => setup.uuid === score.setupUuid)
-                )}
-              </UncommonSpan>{" "}
-              - {new Date(score.date).toLocaleDateString()} - {score.wpmString}{" "}
-              WPM - {score.words} words in {score.time} seconds.
-            </li>
-          ))}
-        </ul>
+
+        <div className="row allquotes-actions">
+          <label className="search-label">Search</label>
+          <input className="search-input" />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Setup</th>
+              <th>WPM</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(score => (
+              <tr key={score.uuid}>
+                <td>{new Date(score.date).toLocaleDateString()}</td>
+                <td>
+                  {getDisplayText(
+                    setups.find(setup => setup.uuid === score.setupUuid)
+                  )}
+                </td>
+                <td>{score.wpmString}</td>
+                <td>
+                  {score.words} words in {score.time} seconds
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </StyledForm>
     );
   }
