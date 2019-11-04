@@ -5,6 +5,8 @@ import { UncommonSpan } from "./nord";
 
 const DATE_ASCENDING = "+date";
 const DATE_DESCENDING = "-date";
+const WPM_ASCENDING = "+wpm";
+const WPM_DESCENDING = "-wpm";
 
 const MyScores = ({ data, setups, ...rest }) => {
   if (data && data.length) {
@@ -22,6 +24,20 @@ const MyScores = ({ data, setups, ...rest }) => {
           [...sortedData].sort((a, b) => (a.date > b.date ? -1 : 1))
         );
         setCurrentSort(DATE_DESCENDING);
+      }
+    };
+
+    const sortByWPM = () => {
+      if (currentSort === WPM_DESCENDING) {
+        setSortedData(
+          [...sortedData].sort((a, b) => (a.wpmRaw > b.wpmRaw ? -1 : 1))
+        );
+        setCurrentSort(WPM_ASCENDING);
+      } else {
+        setSortedData(
+          [...sortedData].sort((a, b) => (a.wpmRaw < b.wpmRaw ? -1 : 1))
+        );
+        setCurrentSort(WPM_DESCENDING);
       }
     };
 
@@ -45,7 +61,9 @@ const MyScores = ({ data, setups, ...rest }) => {
                 <button onClick={sortByDate}>Date</button>
               </th>
               <th>Setup</th>
-              <th>WPM</th>
+              <th>
+                <button onClick={sortByWPM}>WPM</button>
+              </th>
               <th></th>
             </tr>
           </thead>
