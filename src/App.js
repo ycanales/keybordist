@@ -10,6 +10,7 @@ import quotes from "./data/quotes";
 import MySetups from "./MySetups";
 import MyScores from "./MyScores";
 import AllQuotes from "./AllQuotes";
+import ChangeLog from "./ChangeLog";
 
 const App = () => {
   const [quote, setQuote] = useState(
@@ -104,6 +105,7 @@ const App = () => {
               <MyScores {...props} data={myScores} setups={mySetups} />
             )}
           />
+          <Route path="/changelog" render={props => <ChangeLog />} />
           <Route
             path="/"
             exact
@@ -148,7 +150,9 @@ const App = () => {
             </a>
             .
           </p>
-          <p>v2019.7.20</p>
+          <p>
+            <NavLink to="/changelog">v2019.11.30</NavLink>
+          </p>
         </footer>
       </div>
     </Router>
