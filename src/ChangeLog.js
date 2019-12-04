@@ -29,7 +29,7 @@ const ChangeLog = () => (
       <ul>
         <li>Layout is now centered.</li>
         <li>Navigation links are now smaller and right aligned.</li>
-        <li>Improved "My Scores".</li>
+        <li>Improved "My Scores" section.</li>
       </ul>
     </StyledChangelog>
   </StyledForm>
