@@ -30,11 +30,9 @@ const MySetups = ({ data, set, setCurrent, current }) => {
   const saveSetup = e => {
     e.preventDefault();
     if (formIsValid() && data) {
-      set(
-        data.concat([
-          { uuid: uuid(), keyboard, layout, keycaps, switches, other }
-        ])
-      );
+      const setup = { uuid: uuid(), keyboard, layout, keycaps, switches, other }
+      set(data.concat([ setup ]));
+      setCurrent(setup);
       reset();
     }
   };
